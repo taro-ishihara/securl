@@ -15,7 +15,9 @@ app.get('/', async (c) => {
 })
 
 app.post('/create', async (c) => {
-	console.info(c.env)
+	if (!c.req.body) {
+		return c.json({ message: 'Unprocessable Entity: Body is necessary.' }, 422)
+	}
 	const { url, exp } = await c.req.json<{ url: string; exp: string }>()
 	const intExp = parseInt(exp)
 	if (!regUrl.test(url)) {

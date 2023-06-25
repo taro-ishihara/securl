@@ -4,7 +4,7 @@
 	"main": "src/index.ts",
 	"private": true,
 	"scripts": {
-		"deploy": "wrangler publish",
+		"deploy": "wrangler deploy",
 		"start": "wrangler dev",
 		"test": "jest"
 	},
