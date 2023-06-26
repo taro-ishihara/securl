@@ -29,7 +29,12 @@ app.post('/create', async (c) => {
 	if (!(1 < intExp && intExp <= 2592000)) {
 		return c.json({ message: 'Unprocessable Entity: Keep the exp within the range of 1 to 2592000.' }, 422)
 	}
-	const key = id()
+	let key = '00000000'
+	let exist = true
+	while (exist) {
+		key = id()
+		exist = Boolean(await c.env.URL_MAPPINGS.get(key))
+	}
 	await c.env.URL_MAPPINGS.put(key, url, { expirationTtl: intExp })
 	return c.text(c.req.url.replace('/create', '/') + key, 201)
 })
